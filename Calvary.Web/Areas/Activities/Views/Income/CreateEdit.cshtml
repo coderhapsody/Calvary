@@ -1,0 +1,64 @@
+﻿@model Calvary.ViewModels.Activities.Income.CreateEditViewModel
+
+<div style="width: 600px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.IncomeTypeId): </div>
+                <div class="col-md-7">
+                    @(Html.Kendo().DropDownListFor(m => m.IncomeTypeId)
+                        .DataSource(ds => ds.Read("GetIncomeTypes", "Income", new { area = "Activities" }))
+                        .DataTextField("Name")
+                        .DataValueField("Id")
+                        .HtmlAttributes(new {  style="width:250px; "})
+                        .OptionLabel("Pilih Jenis Persembahan"))
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.ReceivedDate): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().DatePickerFor(m => m.ReceivedDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.ReceivedBy): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.ReceivedBy)
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Amount): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().DropDownListFor(m => m.Currency).DataSource(ds => ds.Read("GetCurrencies", "Income", new { area = "Activities" })).HtmlAttributes(new { style="width:100px;" })
+
+                    @Html.Kendo().NumericTextBoxFor(m => m.Amount)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Notes): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().EditorFor(m => m.Notes).Tools(tool => tool.Clear()).Encode(false).HtmlAttributes(new { style = "height: 80px; " })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>    
+    }
+    </div>
+    <script>
+        $(function () {
+            $("#btnClose").click(income.closeClick);
+            $("#btnSave").click(income.saveClick);
+        });
+    </script>

@@ -1,0 +1,38 @@
+﻿@model Calvary.ViewModels.Master.EducationGrade.CreateEditViewModel
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {        
+        @Html.HiddenFor(m => m.Id)
+        @FormOperationHelper.RenderAuditFields(Model)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-4">@Html.LabelFor(m => m.Name): </div>
+                <div class="col-md-6">
+                    @Html.Kendo().TextBoxFor(m => m.Name).HtmlAttributes(new { style="width:400px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-4">@Html.LabelFor(m => m.Seq): </div>
+                <div class="col-md-6">
+                    @(Html.Kendo().NumericTextBoxFor(m => m.Seq).Decimals(0).Format("###"))
+                </div>
+            </div>            
+
+            <div class="form-group">
+                <div class="col-md-4"></div>
+                <div class="col-md-6">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>                    
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").click(eduGrade.closeClick);
+        $("#btnSave").click(eduGrade.saveClick);
+    });
+</script>

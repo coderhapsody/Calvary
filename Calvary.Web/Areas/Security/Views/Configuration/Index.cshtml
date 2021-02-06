@@ -1,0 +1,43 @@
+﻿@model Calvary.ViewModels.Security.Configuration.EditViewModel
+
+<div class="row">
+    <div class="page-header">Konfigurasi</div>
+</div>
+<br/>
+<div class="container">
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.NamaGereja)</div>
+                <div class="col-md-8">@Html.Kendo().TextBoxFor(m => m.NamaGereja)</div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.KotaGereja)</div>
+                <div class="col-md-8">@Html.Kendo().TextBoxFor(m => m.KotaGereja)</div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.PICLKKJ)</div>
+                <div class="col-md-8">@Html.Kendo().TextBoxFor(m => m.PICLKKJ)</div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.KetuaUmum)</div>
+                <div class="col-md-8">@Html.Kendo().TextBoxFor(m => m.KetuaUmum)</div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">@Html.LabelFor(m => m.SekretarisUmum)</div>
+                <div class="col-md-8">@Html.Kendo().TextBoxFor(m => m.SekretarisUmum)</div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-8 col-md-offset-2">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button"><i class="fa fa-save"></i> Simpan</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>

@@ -1,0 +1,68 @@
+﻿@{
+    var fromDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+}
+<div class="row">
+    <div class="page-header">Laporan Penerimaan Uang</div>
+</div>
+<br />
+<div class="row container">
+    <form id="reportForm" name="reportForm" method="GET" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2">Dari Tanggal: </div>
+            <div class="col-md-3">@Html.Kendo().DatePicker().Name("fromDate").Value(fromDate) @Html.ValidationMessage("fromDate")</div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-2">Sampai Tanggal: </div>
+            <div class="col-md-3">@Html.Kendo().DatePicker().Name("toDate").Value(DateTime.Today) @Html.ValidationMessage("toDate") </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-md-3">
+                <button id="preview" class="k-button"><i class="fa fa-print"></i> Print</button>
+            </div>
+        </div>
+
+    </form>
+    <div id="report"></div>
+</div>
+
+
+@section scripts {
+    <script>
+    $(function() {
+        var validationRules = {
+            errorTemplate: CalvaryApp.errorTemplate,
+            rules: {
+                date: function(input) {
+                    if (input.is("#fromDate") || input.is("#toDate")) {
+                        return input.val().trim() !== '' && moment(input.val(), "DD/MM/YYYY").isValid();
+                    }
+                }
+            },
+
+            messages: {
+                date: function() {
+                    return "Tanggal harus valid (DD/MM/YYYY)";
+                }
+            }
+        }
+
+        $("#report").kendoWindow(CalvaryApp.reportWindowOptions);
+
+        $("#preview").click(function (e) {
+            var validator = $("#reportForm").kendoValidator(validationRules).data("kendoValidator");
+            if (validator.validate()) {
+                e.preventDefault();
+                var fromDate = moment($("#fromDate").data("kendoDatePicker").value());
+                var toDate = moment($("#toDate").data("kendoDatePicker").value());
+                var reportWindow = $("#report").data("kendoWindow");
+                reportWindow.title("Laporan Penerimaan Uang")
+                reportWindow.refresh({
+                    url: "@Href("~/Reports/PreviewReport.aspx")?RDL=PenerimaanUang&FromDate=" + fromDate.format("YYYY-MM-DD") + "&ToDate=" + toDate.format("YYYY-MM-DD")
+            }).center().open();
+}
+        });
+    });
+    </script>
+}

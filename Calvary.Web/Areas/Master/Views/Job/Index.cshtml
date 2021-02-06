@@ -1,0 +1,38 @@
+﻿@model Calvary.ViewModels.Master.Job.IndexViewModel
+
+<div class="row">
+    <div class="page-header">Pekerjaan</div>
+</div>
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p>
+                <a href="#" class="k-button k-button-icon" id="btnAddNew"><span class="fa fa-plus"></span> Input</a>
+                <button type="submit" class="k-button" id="btnDelete" name="btnDelete"><span class="fa fa-remove"></span> Hapus</button>
+            </p>
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                      col.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' id='chkDelete' name='chkDelete' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                  col.Bound(m => m.Name).Title("Nama Pekerjaan");
+                  col.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='javascript:;;' class='k-button k-button-icon editRow'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+
+                  })
+                                              .Pageable()
+                                              .Filterable()
+                                              .DataSource(ds => ds.Ajax().Read("List", "Job", new { area = "Master" }))
+                                              .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            )
+        }
+    </div>
+
+    <div id="addEditWindow"></div>
+    @FormOperationHelper.ServiceOperation(Url.Action("Create"), Url.Action("Edit"), Url.Action("Delete"))
+</div>
+
+@section scripts {
+    <script src="@Href("~/Scripts/modules/job.js")"></script>
+}

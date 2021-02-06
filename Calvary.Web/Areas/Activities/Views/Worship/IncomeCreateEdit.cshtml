@@ -1,0 +1,54 @@
+﻿@model Calvary.ViewModels.Activities.Worship.IncomeCreateEditViewModel
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.WorshipId)
+        @Html.HiddenFor(m => m.ReceivedDate)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.IncomeTypeId): </div>
+                <div class="col-md-7">
+                    @(Html.Kendo().DropDownListFor(m => m.IncomeTypeId).DataSource(
+                        ds => ds.Read("GetIncomeTypes", "Worship", new { area = "Activities"}))
+                        .OptionLabel("Pilih jenis persembahan").DataTextField("Name").DataValueField("Id")
+                        .HtmlAttributes(new {  style="width:300px;"}))
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.ReceivedBy): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.ReceivedBy)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Amount): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().NumericTextBoxFor(m => m.Amount).Decimals(2).Format("###,##0")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Notes): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().EditorFor(m => m.Notes).Tools(m => m.Clear()).HtmlAttributes(new { style="height: 80px; width: 450px;"})
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-4"></div>
+                <div class="col-md-6">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").click(worshipIncome.closeClick);
+        $("#btnSave").click(worshipIncome.saveClick);
+    });
+</script>

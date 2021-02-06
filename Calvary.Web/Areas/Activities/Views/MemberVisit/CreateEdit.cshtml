@@ -1,0 +1,48 @@
+﻿@model Calvary.ViewModels.Activities.MemberVisit.CreateEditViewModel
+
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {
+        @Html.HiddenFor(m => m.Id)        
+        @Html.HiddenFor(m => m.MemberId)
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.VisitDate): </div>
+                <div class="col-md-6">
+                    @Html.Kendo().DatePickerFor(m => m.VisitDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.VisitResultId): </div>
+                <div class="col-md-6">
+                    @(Html.Kendo().DropDownListFor(m => m.VisitResultId).DataSource(ds => ds.Read("GetVisitResults", "MemberVisit", new { area = "Activities" }))
+                            .DataTextField("Name").DataValueField("Id").OptionLabel("Hasil Pelawatan").HtmlAttributes(new { style="width:300px;" }))
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Notes): </div>
+                <div class="col-md-6">
+                    @(Html.Kendo().EditorFor(m => m.Notes).Tools(tools => tools.Clear()).HtmlAttributes(new {  style= "width:400px; height: 80px;"}))
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").on("click", visitHistory.closeClick);
+        $("#btnSave").on("click", visitHistory.saveClick);
+    });
+</script>

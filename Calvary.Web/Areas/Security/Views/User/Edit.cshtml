@@ -1,0 +1,58 @@
+﻿@model Calvary.ViewModels.Security.User.CreateEditViewModel
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+
+
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.UserName) </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.UserName)
+                    @Html.ValidationMessageFor(m => m.UserName)
+                </div>
+            </div>     
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.RoleId) </div>
+                <div class="col-md-7">
+                    @Html.Kendo().DropDownListFor(m => m.RoleId).DataSource(ds => ds.Read("GetRoles", "User", new { area = "Security"})).DataTextField("Name").DataValueField("Id").OptionLabel("Pilih Grup Pengguna")
+                    @Html.ValidationMessageFor(m => m.RoleId)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.MemberId) </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.MemberId)
+                    @Html.ValidationMessageFor(m => m.MemberId)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.IsActive) </div>
+                <div class="col-md-7">
+                    @Html.Kendo().CheckBoxFor(m => m.IsActive)
+                    @Html.ValidationMessageFor(m => m.IsActive)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Save</button>
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Close</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").click(userLogin.closeClick);
+        $("#btnSave").click(userLogin.saveClick);
+    });
+</script>

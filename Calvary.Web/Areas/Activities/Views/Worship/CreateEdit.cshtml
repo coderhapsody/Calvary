@@ -1,0 +1,192 @@
+﻿@model Calvary.ViewModels.Activities.Worship.CreateEditViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>Ibadah</h4>
+    </div>
+</div>
+<br />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+            {
+                @Html.ValidationSummary()
+                @Html.HiddenFor(m => m.Id)
+                <div class="form-horizontal">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <div class="col-md-3">@Html.LabelFor(m => m.Date): </div>
+                                <div class="col-md-6">
+                                    @Html.Kendo().DatePickerFor(m => m.Date)
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">@Html.LabelFor(m => m.WorshipTypeId): </div>
+                                <div class="col-md-6">
+                                    @(Html.Kendo().DropDownListFor(m => m.WorshipTypeId)
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .DataSource(ds => ds.Read("GetWorshipTypes", "Worship", new { area = "Activities" }))
+                                .OptionLabel("Pilih Jenis Ibadah")
+                                    )
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">@Html.LabelFor(m => m.Subject): </div>
+                                <div class="col-md-6">
+                                    @Html.Kendo().TextBoxFor(m => m.Subject).HtmlAttributes(new { style = "width:300px;" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-3">@Html.LabelFor(m => m.Priest): </div>
+                                <div class="col-md-6">
+                                    @Html.Kendo().TextBoxFor(m => m.Priest).HtmlAttributes(new { style="width:300px;"})
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            @Html.LabelFor(m => m.Notes)
+                            @Html.TextAreaFor(m => m.Notes, new { style = "width: 100%; height: 150px;",  @class="k-textbox" })
+                            <button id="btnCopyLastNotes" name="btnCopyLastNotes" class="k-button"><i class="fa fa-paste"></i> Salin dari Ibadah sebelumnya</button>
+                        </div>
+                    </div>
+                   
+                    <br/>
+
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend>Jemaat</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Pria</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.JemaatPria).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" }) </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Wanita</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.JemaatWanita).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" })</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend>Simpatisan</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Pria</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.SimpatisanPria).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" }) </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Wanita</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.SimpatisanWanita).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" })</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend>Aktivis</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Pria</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.AktivisPria).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" }) </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Wanita</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.AktivisWanita).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" })</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend>Penatua</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Pria</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.PenatuaPria).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" }) </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Wanita</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.PenatuaWanita).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" })</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <fieldset>
+                                        <legend>Pemusik</legend>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Pria</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.PemusikPria).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" }) </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-3">Wanita</div>
+                                            <div class="col-md-4">@Html.Kendo().NumericTextBoxFor(m => m.PemusikWanita).Decimals(0).Format("##0").HtmlAttributes(new { style = "width:100px;" })</div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-6">
+                            <button type="submit" id="btnSave" name="btnSave" class="k-button"><i class="fa fa-save"></i> Simpan</button>
+                            <a href="@Url.Action("Index")" class="k-button"><i class="fa fa-list"></i> Kembali ke Daftar</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+<script>
+    $(function () {
+        $("#btnSave").click(function (e) {
+            e.preventDefault();
+            var validator = $("#addEditForm").kendoValidator().data("kendoValidator");
+            if (validator.validate()) {
+                $("#addEditForm").submit();
+            }
+        });
+
+        $("#btnCopyLastNotes").click(function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                method: "GET",                
+                url: "@Url.Action("GetLastNotes", new { currentWorshipId = Model.Id })",
+                success: function (result) {
+                    $("#Notes").val(result.Data);
+                },
+                error: function (err) {
+                    alert(err.Message);
+                }
+            })
+        });
+    });
+</script>    
+}
+
+

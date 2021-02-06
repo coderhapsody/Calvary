@@ -1,0 +1,58 @@
+﻿@model Calvary.ViewModels.Master.Member.MemberStateHistoryCreateEditViewModel
+
+<div style="width: 650px; padding: 10px 10px 10px 10px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmMemberState", name = "frmMemberState" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.MemberId)
+        @FormOperationHelper.RenderAuditFields(Model)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">                                        
+                    @Html.LabelFor(model => model.MemberStateId)
+                </div>
+                <div class="col-md-7">
+                    @(Html.Kendo().DropDownListFor(model => model.MemberStateId)
+                        .DataSource(ds => ds.Read("GetMemberStates", "Member", new { area = "Master" }))
+                        .DataTextField("Code")
+                        .DataValueField("Id")
+                        .OptionLabel("Pilih Status DKH")
+                        .HtmlAttributes(new { style = "width: 200px;" }))
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.EffDate)
+                </div>
+                <div class="col-md-7">
+                    @(Html.Kendo().DatePickerFor(m => m.EffDate))
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Notes)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().EditorFor(model => model.Notes).Tools(m => m.Clear()).HtmlAttributes(new { style = "height: 80px; width: 450px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSaveState" name="btnSave" class="k-button">Simpan</button>
+                    <button type="button" id="btnCloseState" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(function () {
+        $("#btnSaveState").click(memberStateHist.saveMemberStateHist);
+        $("#btnCloseState").click(memberStateHist.closeMemberStateHist);
+    });
+</script>

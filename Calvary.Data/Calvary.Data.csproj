@@ -1,0 +1,300 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ECB1E0E1-21DB-4360-8DB6-31DB94B64330}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Calvary.Data</RootNamespace>
+    <AssemblyName>Calvary.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BaptizedReason.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BaptizedReasonMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Calvary.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CalvaryContext.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CalvaryContextExt.cs" />
+    <Compile Include="Configuration.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigurationMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationGrade.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationGradeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationMajor.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EducationMajorMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EntityHelper.cs" />
+    <Compile Include="Ethnic.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EthnicMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Hobby.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HobbyMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ICalvaryContext.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Income.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeType.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="IncomeTypeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Job.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="JobMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KlasisMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="KlasisMappingMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookUp.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LookUpMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Meeting.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeetingMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeetingType.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MeetingTypeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Member.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberMarriage.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberMarriageMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberNote.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberNoteMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberState.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberStateHistory.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberStateHistoryMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberStateMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberVisit.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MemberVisitMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MenuMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MutationType.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MutationTypeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProcedureModels\ProcReportUlangTahunModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Region.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RegionMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResignReason.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ResignReasonMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Role.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleMenu.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RoleMenuMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Schedule.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleGroup.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleGroupMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ScheduleMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Shrine.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ShrineMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Skill.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SkillMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sysdiagram.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SysdiagramMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLogin.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UserLoginMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisitResult.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VisitResultMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Worship.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorshipMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorshipType.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+    <Compile Include="WorshipTypeMapping.cs">
+      <DependentUpon>Calvary.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="EF.Reverse.POCO.Core.ttinclude" />
+    <None Include="EF.Reverse.POCO.ttinclude" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Calvary.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Calvary.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

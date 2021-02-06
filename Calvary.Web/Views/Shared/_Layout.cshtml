@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GKI Kepa Duri</title>    
+    @Scripts.Render("~/bundles/modernizr")
+    <!--This bundle was moved by the Telerik VS Extensions for compatibility reasons-->
+    @Scripts.Render("~/bundles/jquery")    
+    <link href="@Url.Content("~/Content/kendo/2015.2.902/kendo.common.min.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/kendo/2015.2.902/kendo.default.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2015.2.902/kendo.mobile.all.min.css")" rel="stylesheet" type="text/css" />
+	<link href="@Url.Content("~/Content/kendo/2015.2.902/kendo.dataviz.min.css")" rel="stylesheet" type="text/css" />	
+	<link href="@Url.Content("~/Content/kendo/2015.2.902/kendo.dataviz.default.min.css")" rel="stylesheet" type="text/css" />
+    @Styles.Render("~/Content/css")
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/jquery.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/kendo.aspnetmvc.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/kendo.culture.id-ID.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/kendo.modernizr.custom.js")"></script>
+    <script src="@Url.Content("~/Scripts/moment.js")"></script>
+    <script>
+        $(function () {
+            kendo.culture("id-ID");
+            $.ajaxSetup({ cache: false });
+        });
+    </script>
+</head>
+<body>
+    @Html.Action("Navigation", "Home", new { area = String.Empty })
+    <div class="container body-content">
+        @RenderBody()
+
+        @*<footer>
+                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            </footer>*@
+    </div>
+
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/app")
+    <input type="hidden" id="reportUrl" name="reportUrl" value="@Url.Content("~/Reports/PreviewReport.aspx")" />
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

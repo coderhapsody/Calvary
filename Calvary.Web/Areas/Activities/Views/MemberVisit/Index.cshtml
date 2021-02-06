@@ -1,0 +1,35 @@
+﻿@model Calvary.ViewModels.Activities.MemberVisit.IndexViewModel
+
+<div class="row">
+    <div class="page-header">Pelawatan - Daftar Jemaat</div>
+</div>
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                      col.Bound(m => m.MemberNo).Title("No. Anggota");
+                      col.Bound(m => m.Name).Title("Nama");
+                      col.Bound(m => m.Gender).Title("Gender");
+                      //col.Bound(m => m.Email).Title("Email");
+                      col.Bound(m => m.HomePhone).Title("Telepon");
+                      col.Bound(m => m.CellPhone1).Title("Handphone");
+                      col.Bound(m => m.BirthDate).Title("Tgl. Lahir").Format("{0:dd-MMM-yyyy}");
+                      col.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='" + Url.Action("VisitHistory", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'>Kunjungan</a>").Width(80).Title("");
+
+                  })
+                                              .Pageable()
+                                              .Filterable()
+                                              .DataSource(ds => ds.Ajax().Read("List", "Member", new { area = "Master" }))
+                                              .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            )
+        }
+    </div>
+</div>
+
+
+@section scripts {
+}

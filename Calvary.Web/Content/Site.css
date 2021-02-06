@@ -1,0 +1,66 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 10px;
+    color:black;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+table a:not(.btn), .table a:not(.btn) {
+    text-decoration: none;
+}
+
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+.page-header {
+    margin: auto;
+    font-variant: small-caps;
+    font-size: 140%;
+    margin-left: 20px;
+    border: solid 0px;
+    font-weight: bold;
+}
+
+#grid tbody tr:hover {
+    background: #E2FFB6;
+}
+
+input[readonly].k-state-disabled {
+    background-color: #a6fffa;
+}
+
+.k-input, input.k-textbox, textarea.k-textbox, input.k-textbox:hover, textarea.k-textbox:hover, .k-textbox>input, .k-multiselect-wrap {
+    color: #000;
+}
+
+legend {
+    font-size: 100%;
+    font-weight: bold;
+}
+
+.member-tab {
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+
+.navbar-nav > li > a, .navbar-brand {
+    padding-top: 10px !important;
+    padding-bottom: 0 !important;
+    height: 40px;
+}
+
+.navbar {
+    min-height: 40px !important;
+}

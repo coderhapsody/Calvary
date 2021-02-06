@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Calvary.ViewModels.Security.MenuAccess.ListMenuViewModel>
+
+<ul class="dropdown-menu" role="menu">
+    @foreach (var menu in Model)
+    {
+        <li><a href="@Url.Content(menu.Url)"> @menu.Name</a> </li>
+    }
+</ul>

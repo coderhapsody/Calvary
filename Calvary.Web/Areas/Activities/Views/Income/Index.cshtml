@@ -1,0 +1,49 @@
+﻿@model Calvary.ViewModels.Activities.Income.IndexViewModel
+
+<div class="row">
+    <div class="page-header">Persembahan</div>
+</div>
+<br />
+<div class="row">
+    <div class="col-md-2">Periode:</div>
+    <div class="col-md-3">Bulan @(Html.Kendo().DropDownListFor(m => m.Month).DataSource(ds => ds.Read("GetMonths", "Income", new { area = "Activities" })).DataTextField("MonthName").DataValueField("Month").Value(DateTime.Today.Month.ToString()))</div>
+    <div class="col-md-3">Tahun @(Html.Kendo().DropDownListFor(m => m.Year).DataSource(ds => ds.Read("GetYears", "Income", new { area = "Activities" })).Value(DateTime.Today.Year.ToString())) </div>
+    <div class="col-md-3"><button id="btnSearch" class="k-button">Cari Data</button> </div>
+</div>
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p>
+                <a href="@Url.Action("Create")" class="k-button k-button-icon" id="btnAddNew"><span class="fa fa-plus"></span> Input</a>
+                <button type="submit" class="k-button" id="btnDelete" name="btnDelete"><span class="fa fa-remove"></span> Hapus</button>
+            </p>
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                  col.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' id='chkDelete' name='chkDelete' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                  col.Bound(m => m.IncomeTypeName).Title("Jenis Persembahan");
+                  col.Bound(m => m.WorshipName).Title("Ibadah");
+                  col.Bound(m => m.ReceivedDate).Format("{0:dd-MMM-yyyy}").Title("Tanggal Terima");
+                  col.Bound(m => m.ReceivedBy).Title("Diterima Oleh");
+                  col.Bound(m => m.Amount).Format("{0:###,##0.00}").HtmlAttributes(new { style = "text-align:right;" }).HeaderHtmlAttributes(new { style = "text-align:right;" });
+                  col.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='" + Url.Action("Edit", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+
+                  })
+                            .Pageable()
+                            .Filterable()
+                            .DataSource(ds => ds.Ajax().Read(d => d.Action("List", "Income", new { area = "Activities" }).Data("income.gridData")))
+                            .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            )
+        }
+    </div>
+
+    <div id="addEditWindow"></div>
+    @FormOperationHelper.ServiceOperation(Url.Action("Create"), Url.Action("Edit"), Url.Action("Delete"))
+</div>
+
+@section scripts {
+    <script src="@Href("~/Scripts/modules/income.js")"></script>
+}

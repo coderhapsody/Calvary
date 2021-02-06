@@ -1,0 +1,51 @@
+﻿@model Calvary.ViewModels.Master.Member.IndexViewModel
+
+<div class="row">
+    <div class="page-header">Anggota Jemaat</div>
+</div>
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p> 
+                <div class="row">
+                    <div class="col-md-6">
+                        <a href="@Url.Action("Create")" class="k-button k-button-icon" id="btnAddNew"><span class="fa fa-plus"></span> Input</a>
+                        <button type="submit" class="k-button" id="btnDelete" name="btnDelete" data-action="@Url.Action("Delete")"><span class="fa fa-remove"></span> Hapus</button>
+                    </div>
+                    <div class="col-md-6">
+                        @Html.Kendo().CheckBoxFor(m => m.IncludeResigned).Label("Atestasi Keluar")
+                        &nbsp;&nbsp;&nbsp;
+                        @Html.Kendo().CheckBoxFor(m => m.IncludeDeceased).Label("Meninggal Dunia")
+                    </div>
+                </div>
+            </p>
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                  col.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' id='chkDelete' name='chkDelete' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                      col.Bound(m => m.MemberNo).Title("No. Anggota");
+                      col.Bound(m => m.Name).Title("Nama");
+                      col.Bound(m => m.Gender).Title("Gender");
+                      //col.Bound(m => m.Email).Title("Email");
+                      col.Bound(m => m.HomePhone).Title("Telepon");
+                      col.Bound(m => m.CellPhone1).Title("Handphone");
+                      col.Bound(m => m.BirthDate).Title("Tgl. Lahir").Format("{0:dd-MMM-yyyy}");
+                      col.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='" + Url.Action("Edit", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+
+                  })
+                .Pageable()
+                .Filterable()
+                .DataSource(ds => ds.Ajax().Read(read => read.Action("List", "Member", new { area = "Master" }).Data("member.getParameters")))
+                .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+            )
+        }
+    </div>
+</div>
+
+
+@section scripts {
+    <script src="~/Scripts/modules/member.js"></script>
+}

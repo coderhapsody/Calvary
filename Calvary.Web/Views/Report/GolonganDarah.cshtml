@@ -1,0 +1,42 @@
+﻿@{
+    var fromDate = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+}
+<div class="row">
+    <div class="page-header">Laporan Daftar Jemaat berdasarkan Golongan Darah</div>
+</div>
+<br />
+<div class="row container">
+    <form id="reportForm" name="reportForm" method="GET" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-md-2">Golongan Darah: </div>
+            <div class="col-md-3">@Html.Kendo().DropDownList().Name("goldarah").BindTo(ViewBag.GolDarah).HtmlAttributes(new { style="width:80px;" })</div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-md-3">
+                <button id="preview" class="k-button"><i class="fa fa-print"></i> Print</button>
+            </div>
+        </div>
+
+    </form>
+    <div id="report"></div>
+</div>
+
+
+@section scripts {
+    <script>
+        $(function () {
+            $("#report").kendoWindow(CalvaryApp.reportWindowOptions);
+
+            $("#preview").click(function (e) {
+                e.preventDefault();
+                var goldarah = $("#goldarah").getKendoDropDownList().value();
+                var reportWindow = $("#report").data("kendoWindow");
+                reportWindow.title("Laporan Golongan Darah");
+                reportWindow.refresh({
+                    url: "@Href("~/Reports/PreviewReport.aspx")?RDL=GolonganDarah&GolDarah=" + goldarah
+                }).center().open();
+            });
+        });
+    </script>
+}

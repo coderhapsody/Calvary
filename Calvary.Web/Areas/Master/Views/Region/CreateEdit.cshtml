@@ -1,0 +1,46 @@
+﻿@model Calvary.ViewModels.Master.Region.CreateEditViewModel
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {        
+        @Html.HiddenFor(m => m.Id)
+        
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-2">Kode Wilayah: </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.Code)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">Nama Wilayah: </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.Name).HtmlAttributes(new { style="width:400px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2">Status Aktif: </div>
+                <div class="col-md-7">
+                    @Html.Kendo().CheckBoxFor(m => m.IsActive)
+                    
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-2"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>                    
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").click(region.closeClick);
+        $("#btnSave").click(region.saveClick);
+    });
+</script>

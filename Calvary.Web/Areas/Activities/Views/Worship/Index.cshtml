@@ -1,0 +1,43 @@
+﻿@model Calvary.ViewModels.Activities.Worship.IndexViewModel
+
+<div class="row">
+    <div class="page-header">Ibadah</div>
+</div>
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.ValidationSummary()
+            <p>
+                <a href="@Url.Action("Create")" class="k-button k-button-icon" id="btnAddNew"><span class="fa fa-plus"></span> Input</a>
+                <button type="submit" class="k-button" id="btnDelete" name="btnDelete"><span class="fa fa-remove"></span> Hapus</button>
+            </p>
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                      col.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' id='chkDelete' name='chkDelete' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                      col.Bound(m => m.WorshipTypeName).Title("Jenis Ibadah");
+                      col.Bound(m => m.Date).Format("{0:dd-MMM-yyyy}").Title("Tanggal Ibadah");
+                      col.Bound(m => m.Priest).Title("Pembicara");  
+                      col.Bound(m => m.Subject);
+                      col.Template(@<text></text>).ClientTemplate(@"<a data-id='#=Id#' href='" + Url.Action("Edit", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'><i class='fa fa-edit'></i></a>" +
+                                                                  @"<a data-id='#=Id#' href='" + Url.Action("IncomeIndex", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'><i class='fa fa-money'></i></a>" +
+                                                                  @"<a data-id='#=Id#' href='javascript:;;' class='k-button k-button-icon printRow'><i class='fa fa-print'></i></a>")
+                         .Width(120).Title("");
+
+                  })
+                            .Pageable()
+                            .Filterable()
+                                .DataSource(ds => ds.Ajax().Read("List", "Worship", new { area = "Activities" }))
+                            .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+)
+}
+    </div>
+    <div id="report"></div>
+    <div id="addEditWindow"></div>
+</div>
+
+@section scripts {
+   <script src="~/Scripts/modules/worship.js"></script>
+     }

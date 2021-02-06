@@ -1,0 +1,111 @@
+﻿<div class="row">
+    <div class="page-header">Akses Menu</div>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        @(Html.Kendo().TreeView()
+              .Name("treeMenus")
+              .DataTextField("Name")
+              .LoadOnDemand(false)
+              .Events(ev => ev.Select("treeMenus.onSelected"))
+              .DataSource(dataSource => dataSource
+                  .Read(read => read
+                      .Action("ListMenus", "MenuAccess", new { area = "Security" })
+                  )
+              )
+        )
+    </div>
+
+    <div class="col-md-8">
+        <strong id="menuName"></strong>
+        <br />
+        <table id="tblRoles" class="table"></table>
+
+        <div class="col-md-12">
+            <button type="submit" id="btnSave" name="btnSave" class="btn btn-default">Save</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+                
+        var treeMenus = (function ($) {
+            
+            return {
+                onSelected: function (e) {                    
+                    e.preventDefault();
+                    var that = this;
+                    var nodeId = $("#treeMenus").data("kendoTreeView").dataItem(e.node).id;                    
+                    $.ajax({
+                        type: "GET",
+                        url: "@Url.Action("GetRolesFromMenu")",
+                        data: {
+                            menuId: nodeId
+                        },
+                        success: function (result) {
+                            $("#tblRoles").empty();
+                            $("#btnSave").show();                            
+                            $("#menuName").text(that.text(e.node));
+                            //if (!$("#treeMenus").data("kendoTreeView").dataItem(e.node).hasChildren) {
+                                var html = "";
+                                $.each(result, function (index, el) {                                    
+                                    html += "<tr>";
+                                    html += "<td><input type='hidden' id='menuId' name='menuId' value='" + el.MenuId + "' /><input type='checkbox' class='chkRole' data-id='" + el.RoleId + "' " + (el.AllowRole ? "checked='checked'" : "") +" /> " + el.RoleName + "</td>";
+                                    html += "<td></td><td></td><td></td>";
+                                    //html += "<td><input type='checkbox' class='chkAllowAdd' data-id='"+ el.RoleId +"' " + (el.AllowAdd ? "checked='checked'" : "") + " /> Input</td>";
+                                    //html += "<td><input type='checkbox' class='chkAllowEdit' data-id='" + el.RoleId + "' " + (el.AllowEdit ? "checked='checked'" : "") + " /> Edit</td>";
+                                    //html += "<td><input type='checkbox' class='chkAllowDelete' data-id='" + el.RoleId + "' " + (el.AllowDelete ? "checked='checked'" : "") + " /> Hapus</td>";
+                                    html += "</tr>";
+                                });
+                                $(html).appendTo("#tblRoles");
+                            //}
+                        },
+                        error: function (err) {
+                            alert(err);
+                        }
+                    });
+                }
+            }
+        })(jQuery);
+       
+        $(function () {
+            $("#btnSave").hide();
+            $("#btnSave").click(function (e) {
+                e.preventDefault();
+                var list = [];
+                $(".chkRole").each(function (index, el) {
+                    var roleId = $(el).attr("data-id");
+                    var allowAdd = $(".chkAllowAdd[data-id=" + roleId + "]").is(":checked");
+                    var allowEdit = $(".chkAllowEdit[data-id=" + roleId + "]").is(":checked");
+                    var allowDelete = $(".chkAllowDelete[data-id=" + roleId + "]").is(":checked");
+                    var menuId = $("#menuId").val();
+                    var obj = {
+                        menuId: menuId,
+                        roleId: $(el).is(":checked") ? roleId : 0,
+                        allowAdd: allowAdd,
+                        allowEdit: allowEdit,
+                        allowDelete: allowDelete
+                    };
+                    list.push(obj);
+                    
+                });
+                $.ajax({
+                    url: "@Url.Action("Save")",
+                    type: "POST",
+                    data: JSON.stringify(list),
+                    contentType: 'application/json; charset=utf-8',
+                    success: function (result) {
+                        if (result.IsSuccess) {
+                            alert("Pengaturan hak akses untuk menu " + $("#menuName").text() +" sudah disimpan.");
+                        }
+                    },
+                    error: function (err) {
+                        alert(err);
+                    }
+                });
+            });
+        });
+    </script>
+}

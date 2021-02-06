@@ -1,0 +1,45 @@
+﻿@model Calvary.ViewModels.Master.Shrine.CreateEditViewModel
+
+<div style="width: 550px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm" }))
+    {        
+        @Html.HiddenFor(m => m.Id)
+        
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Name): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.Name).HtmlAttributes(new {style = "width:400px;"})
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Address): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.Address).HtmlAttributes(new { style = "width:400px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">@Html.LabelFor(m => m.Phone): </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(m => m.Phone).HtmlAttributes(new { style = "width:400px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSave" name="btnSave" class="k-button">Simpan</button>                    
+                    <button type="button" id="btnClose" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<script>
+    $(function () {
+        $("#btnClose").click(shrine.closeClick);
+        $("#btnSave").click(shrine.saveClick);
+    });
+</script>

@@ -1,0 +1,52 @@
+﻿@{
+    string fromYear = Convert.ToString(ViewBag.FromYear);
+    string toYear = Convert.ToString(ViewBag.ToYear);
+}
+
+
+<div class="row">
+    <div class="page-header">Laporan DBAJ Klasis (Database Jemaat)</div>
+</div>
+<br />
+<div class="row container">
+    <div class="row">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "formDBAJ", name = "formDBAJ" }))
+        {
+            <div class="form-group">
+                <div class="col-md-2">Tahun Pelayanan: </div>
+                <div class="col-md-8">
+                    @Html.Kendo().TextBox().Name("FromYear").Value(fromYear).HtmlAttributes(new { style = "width:100px; " })
+                    &nbsp;&nbsp;-&nbsp;&nbsp;
+                    @Html.Kendo().TextBox().Name("ToYear").Value(toYear).HtmlAttributes(new { style = "width:100px; " })
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-md-3">
+                    <button id="preview" class="k-button"><i class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+
+        }
+        <div id="report"></div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+
+        $("#preview").click(function (e) {
+            e.preventDefault();
+
+            var tahunPelayanan = $("#FromYear").val() + " - " + $("#ToYear").val();
+            if (confirm("Cetak laporan DBAJ untuk tahun pelayanan " + tahunPelayanan + " ?")) {
+                $("#preview").addClass("k-state-disabled");
+                $("#preview").attr("disabled", "disabled");
+
+                $("#preview").text("Mohon menunggu...");
+                $("#formDBAJ").submit();
+            }
+        });
+    });
+</script>

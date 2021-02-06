@@ -1,0 +1,19 @@
+﻿<ul class="nav navbar-nav">
+    @Html.Action("GetRootMenus", "Home", new { area = String.Empty })
+</ul>
+<div id="about"></div>
+
+<script>
+    $(function () {
+        $("#aboutMenu").click(function (e) {
+            $("#about").html(CalvaryApp.loadingTemplate);
+            $("#about").kendoWindow({
+                modal: true,
+                width: 500,
+                height: 200,
+                title: "Tentang Project Calvary",
+                content: "@Url.Action("About", "Home", new{area=String.Empty})"
+            }).data("kendoWindow").open().center();
+        });
+    });
+</script>

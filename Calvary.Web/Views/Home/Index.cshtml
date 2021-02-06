@@ -1,0 +1,70 @@
+﻿@model Calvary.ViewModels.Dashboard.DashboardViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<br />
+<div class="row">
+    <div class="col-md-6">
+        @(Html.Kendo().Scheduler<Calvary.Web.Models.ActiveScheduleViewModel>()
+        .Name("schedule")
+        .Height(550)
+        .Mobile()
+        .StartTime(6, 0, 0).EndTime(23, 59, 59)
+        .Views(views =>
+        {
+            views.MonthView(m => m.Selected(true));
+            views.DayView();
+            views.WeekView();
+            views.AgendaView();
+        })
+        .DataSource(ds => ds.Read("Read", "Schedule"))
+        .Mobile()        
+        //.Events(ev => ev.Save("scheduler.save").Remove("scheduler.remove"))
+        )
+    </div>
+
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success">
+                    <div class="panel-heading">Today Birthday</div>
+                    <div class="panel-body">
+                        @(Html.Kendo().Grid(Model.Birthdays).Name("birthdayGrid").Columns(
+                              col =>
+                              {
+                                  col.Bound(m => m.MemberNo).Title("No. Anggota");
+                                  col.Bound(m => m.Name).Title("Nama");
+                                  col.Bound(m => m.BirthDate).Title("Tgl. Lahir").Format("{0:dd/MM}");
+                              })
+                            .DataSource(ds => ds.Ajax().Read("TodayBirthday", "Dashboard", new { area = "" }))
+                            .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+                        )
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6">
+                @(Html.Kendo().Chart<Calvary.ViewModels.Dashboard.MemberSummaryByGender>()
+                .Name("MemberSummaryByGender")     
+                .Title("Jumlah Anggota per Gender").PlotArea(plot => plot.Margin(-150, 0,0,0))                           
+                .DataSource(ds => ds.Read("MemberSummaryByGender", "Dashboard", new { area = String.Empty }))
+                .Series(s => s.Pie(pie => pie.Total, pie => pie.Gender).Labels(lbl => lbl.Visible(true).Position(ChartPieLabelsPosition.InsideEnd).Template("#=category#")))                
+                .Legend(legend => legend.Visible(false))
+                )
+            </div>
+            <div class="col-sm-6">
+                @(Html.Kendo().Chart<Calvary.ViewModels.Dashboard.MemberSummaryByAge>()
+        .Name("MemberSummaryByAge")
+        .Title("Jumlah Anggota per Umur").PlotArea(plot => plot.Margin(-150, 0, 0, 0))
+        .DataSource(ds => ds.Read("MemberSummaryByAge", "Dashboard", new { area = String.Empty }))
+        .Series(s => s.Pie(pie => pie.Total, pie => pie.AgeInterval, expressionExplode: pie => pie.AgeInterval == ">65")
+                .Labels(lbl => lbl.Visible(true).Position(ChartPieLabelsPosition.InsideEnd).Template("#=category#: #=value#")))
+                .Legend(legend => legend.Visible(false))
+                )
+            </div>
+        </div>
+    </div>
+</div>

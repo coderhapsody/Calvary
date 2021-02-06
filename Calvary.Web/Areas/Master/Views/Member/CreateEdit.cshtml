@@ -1,0 +1,692 @@
+﻿@model Calvary.ViewModels.Master.Member.CreateEditViewModel
+<style>
+    .k-tabstrip > .k-content {
+        overflow: hidden;
+    }
+</style>
+<div class="row">
+    <div class="page-header">Anggota Jemaat</div>
+</div>
+<div class="container">
+    <div class="row">
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "addEditForm", name = "addEditForm", @class = "form-horizontal" }))
+        {
+            @Html.ValidationSummary()
+
+            <div class="col-sm-12">
+                @Html.HiddenFor(m => m.Id)
+                <div id="tabstrip" style="display:none;">
+                    <ul>
+                        <li class="k-state-active">Informasi Pribadi</li>
+                        <li>Kontak</li>
+                        <li>Atestasi</li>
+                        <li>Keluarga</li>
+                        <li>Pendidikan</li>
+                        <li>Pekerjaan</li>
+                        <li>Baptis</li>
+                        <li>Sidi</li>
+                        <li>Pernikahan</li>
+                        <li>Kematian</li>
+                        <li>Status DKH</li>
+                        <li>Catatan</li>
+                        <li>Pelawatan</li>
+                    </ul>
+                    <div id="informasiPribadi">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(m => m.MemberNo, new { @class = "control-label" })
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.MemberNo).HtmlAttributes(new { data_validateurl=Url.Action("IsMemberNoValid") })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(m => m.Name, new { @class = "control-label" }) / @Html.LabelFor(m => m.NickName, new { @class = "control-label" })
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.Name).HtmlAttributes(new { style = "width:400px;" })
+                                @Html.Kendo().TextBoxFor(m => m.NickName)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(m => m.Gender, new { @class = "control-label" })
+                            </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.Gender)
+                                .DataSource(ds => ds.Read("GetGenders", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Jenis Kelamin")
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.BloodType, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.BloodType)
+                            .DataSource(ds => ds.Read("GetBloodTypes", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Gol. Darah").HtmlAttributes(new { style = "width:150px;" })
+                                )
+                                @(Html.Kendo().DropDownListFor(m => m.Rhesus).BindTo(new string[] { "", "+", "-" }).HtmlAttributes(new { style="width:50px;" })
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.MaritalStatus, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.MaritalStatus)
+                                .DataSource(ds => ds.Read("GetMaritalStatuses", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Status Nikah")
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"><label class="control-label">Tgl & Tempat Lahir</label></div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().DatePickerFor(m => m.BirthDate)
+                                &nbsp;
+                                @Html.Kendo().TextBoxFor(m => m.BirthCity).HtmlAttributes(new { style = "width:250px;" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.EthnicId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.EthnicId)
+                                .DataSource(ds => ds.Read("GetEthnics", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Etnis")
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"><label class="control-label">Hobby</label></div>
+                            <div class="col-sm-9">
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.HobbyId1)
+                                        .DataSource(ds => ds.Read("GetHobbies", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Hobby")
+                                    )
+                                </div>
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.HobbyId2)
+                                        .DataSource(ds => ds.Read("GetHobbies", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Hobby")
+                                    )
+                                </div>
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.HobbyId3)
+                                        .DataSource(ds => ds.Read("GetHobbies", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Hobby")
+                                    )
+                                </div>
+                            </div>                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"><label class="control-label">Keahlian</label></div>
+                            <div class="col-sm-9">
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.SkillId1)
+                                        .DataSource(ds => ds.Read("GetSkills", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Keahlian")
+                                    )
+                                </div>
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.SkillId2)
+                                        .DataSource(ds => ds.Read("GetSkills", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Keahlian")
+                                    )
+                                </div>
+                                <div class="col-sm-3">
+                                    @(Html.Kendo().DropDownListFor(m => m.SkillId3)
+                                        .DataSource(ds => ds.Read("GetSkills", "Member", new { area = "Master" }))
+                                        .DataTextField("Name")
+                                        .DataValueField("Id")
+                                        .OptionLabel("Pilih Keahlian")
+                                    )
+                                </div>
+                            </div>
+                        </div>
+
+                        <br />
+                    </div>
+                    <div id="kontak">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(m => m.Address, new { @class = "control-label" })
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.Address).HtmlAttributes(new { style = "width:80%;" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.RegionId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.RegionId)
+                                .DataSource(ds => ds.Read("GetRegions", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .HtmlAttributes(new { style = "width:100%;" })
+                                .OptionLabel("Pilih Wilayah")
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">
+                                @Html.LabelFor(m => m.HomePhone, new { @class = "control-label" })
+                            </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.HomePhone)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.CellPhone1) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.CellPhone1)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2">@Html.LabelFor(m => m.CellPhone2) </div>
+                            <div class="col-md-7">
+                                @Html.Kendo().TextBoxFor(m => m.CellPhone2)
+
+                                @Html.ValidationMessageFor(m => m.CellPhone2)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2">@Html.LabelFor(m => m.Email) </div>
+                            <div class="col-md-7">
+                                @Html.Kendo().TextBoxFor(m => m.Email).HtmlAttributes(new { style = "width:40%;" })
+
+                                @Html.ValidationMessageFor(m => m.Email)
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="atestasi">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-md-2">@Html.LabelFor(m => m.JoinDate, new { @class = "control-label" }) </div>
+                            <div class="col-md-9">
+                                @Html.Kendo().DatePickerFor(m => m.JoinDate)
+
+                                @Html.ValidationMessageFor(m => m.JoinDate)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.JoinFromShrineId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.JoinFromShrineId)
+                                .DataSource(ds => ds.Read("GetShrines", "Member", new { area = "Master" }))
+                                .HtmlAttributes(new { style = "width:350px; " })
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Gereja"))
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.JoinNote, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.JoinNote).HtmlAttributes(new { style = "width:80%;" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().CheckBoxFor(m => m.JoinFlagATPS).Label(" ATPS: Angka pertambahan karena pindah dari gereja lain melalui Sidi")
+                            </div>
+                        </div>
+                        <hr/>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ResignDate, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().DatePickerFor(m => m.ResignDate)
+                                @Html.ValidationMessageFor(m => m.ResignDate)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ResignReasonId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.ResignReasonId)
+                                .DataSource(ds => ds.Read("GetResignReasons", "Member", new { area = "Master" }))
+                                .HtmlAttributes(new { style = "width:350px; " })
+                                .DataTextField("Description")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Alasan At. Keluar"))
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ResignToShrineId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.ResignToShrineId)
+                                .DataSource(ds => ds.Read("GetShrines", "Member", new { area = "Master" }))
+                                .HtmlAttributes(new { style = "width:350px; " })
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Gereja"))
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ResignNote, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.ResignNote).HtmlAttributes(new { style = "width:80%;" })
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="keluarga">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.FatherName, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.FatherName).HtmlAttributes(new { style="width:350px;"})                               
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.FatherChrismationType, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.FatherChrismationType)
+                                .DataSource(ds => ds.Read("GetChrismationTypes", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Baptis / Sidi")
+                                )
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.FatherMemberNo, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.FatherMemberNo)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.MotherName, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.MotherName).HtmlAttributes(new { style = "width:350px;" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.MotherChrismationType, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.MotherChrismationType)
+                                .DataSource(ds => ds.Read("GetChrismationTypes", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Baptis / Sidi")
+                                )
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.MotherMemberNo, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.MotherMemberNo)
+                            </div>
+                        </div>
+
+                        <br />
+                    </div>
+                    <div id="pendidikan">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.LastEducationGradeId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.LastEducationGradeId)
+                                .DataSource(ds => ds.Read("GetEducationGrades", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Tingkat Pendidikan")
+                                .HtmlAttributes(new { style="width:250px;"})
+                                )
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-md-2">@Html.LabelFor(m => m.EducationMajorId, new { @class = "control-label" }) </div>
+                            <div class="col-md-9">
+                                @(Html.Kendo().DropDownListFor(m => m.EducationMajorId)
+                                .DataSource(ds => ds.Read("GetEducationMajors", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Bidang Pendidikan")
+                                .HtmlAttributes(new { style = "width: 350px;" })
+                                )
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="pekerjaan">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.OfficeName, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.OfficeName).HtmlAttributes(new { style = "width:100%;" })
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.OfficeAddress, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.OfficeAddress).HtmlAttributes(new { style = "width:100%;" })
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.OfficePhone, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.OfficePhone)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.OfficeCity, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.OfficeCity)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.JobId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.JobId)
+                                .DataSource(ds => ds.Read("GetJobs", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Pekerjaan")
+                                )
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.OfficeRole, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.OfficeRole).HtmlAttributes(new { style = "width:50%;" })
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="baptisanAnak">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChildhoodBaptizedShrineId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.ChildhoodBaptizedShrineId)
+                                .DataSource(ds => ds.Read("GetShrines", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Tempat Ibadah / Gereja")
+                                .HtmlAttributes(new { style = "width:300px;" })
+                                )
+
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChildhoodBaptizedPriest, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.ChildhoodBaptizedPriest)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChildhoodBaptizedDate, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().DatePickerFor(m => m.ChildhoodBaptizedDate)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChildhoodBaptizedCert, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.ChildhoodBaptizedCert)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().CheckBoxFor(m => m.ChildhoodBaptizedFlagATIOT).Label(" ATIOT: Angka pertambahan anak baru, karena ikut Baptis bersama-sama orang tuanya")
+                            </div>
+                        </div>
+                        <br />
+                    </div>                    
+                    <div id="sidi">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChrismationType, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.ChrismationType)
+                                .DataSource(ds => ds.Read("GetChrismationTypes", "Member", new { area = "Master" }))
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .OptionLabel("Pilih Baptis / Sidi")
+                                )
+
+                                @(Html.Kendo().DropDownListFor(m => m.BaptizedReasonId)
+                                    .DataSource(ds => ds.Read("GetBaptizedReasons", "Member", new { area = "Master" }))
+                                    .DataTextField("Description")
+                                    .DataValueField("Id")
+                                    .OptionLabel("Pilih kondisi ATD")
+                                    .HtmlAttributes(new { style="width:300px;"})
+                                )
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChrismationShrineId, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @(Html.Kendo().DropDownListFor(m => m.ChrismationShrineId)
+                                .DataSource(ds => ds.Read("GetShrines", "Member", new { area = "Master" }))
+                                .DataTextField("Name")
+                                .DataValueField("Id")
+                                .OptionLabel("Pilih Tempat Ibadah / Gereja")
+                                .HtmlAttributes(new { style = "width:300px;" })
+                                )
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChrismationPriest, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.ChrismationPriest)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChrismationDate, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().DatePickerFor(m => m.ChrismationDate)
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.ChrismationCert, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().TextBoxFor(m => m.ChrismationCert)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().CheckBoxFor(m => m.ChrismationFlagATIS).Label(" ATIS: Angka pertumbuhan hasil inkubasi iman lintas generasi melalui Sidi")
+                            </div>
+                        </div>
+                        <br />
+                    </div>                                        
+                    <div id="pernikahan">
+                        <br />
+                        <p>
+                            <a href="@Url.Action("CreateMarriage")" class="k-button k-button-icon" id="btnAddNewMarriage" data-createurl="@Url.Action("CreateMarriage")"><span class="fa fa-plus"></span> Tambah Info Pernikahan</a>
+                            <button type="submit" class="k-button" id="btnDeleteMarriage" name="btnDeleteMarriage" data-deleteurl="@Url.Action("DeleteMarriage")"><span class="fa fa-remove"></span> Hapus Info Pernikahan</button>
+                        </p>
+                        @(Html.Kendo().Grid(Model.Marriages).Name("marriages").EnableCustomBinding(true)
+                            .Columns(column =>
+                            {
+                                column.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' name='chkDeleteMarriage' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                                column.Bound(m => m.MarriageDate).Format("{0:dd MMMM yyyy}");
+                                column.Bound(m => m.SpouseName);
+                                column.Bound(m => m.ShrineName);
+                                column.Bound(m => m.Priest);
+                                column.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='javascript:;;' class='k-button k-button-icon edit-marriage' data-editurl='" + Url.Action("EditMarriage") + "'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+                            }).DataSource(ds => ds.Ajax().Read("ListMarriages", "Member", new { area = "Master", memberId = Model.Id }))
+                        )<br />
+                    </div>
+                    <div id="kematian">
+                        <br />
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.DeceasedDate, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.Kendo().DatePickerFor(m => m.DeceasedDate)
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-2">@Html.LabelFor(m => m.DeceasedNotes, new { @class = "control-label" }) </div>
+                            <div class="col-sm-9">
+                                @Html.TextAreaFor(m => m.DeceasedNotes)
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <div id="statusDkh">
+                        <br />
+                        <p>
+                            <a href="@Url.Action("CreateMemberStateHistory")" data-createurl="@Url.Action("CreateMemberStateHistory")" class="k-button k-button-icon" id="btnCreateMemberStateHistory"><span class="fa fa-plus"></span> Tambah Info DKH</a>
+                            <button type="submit" data-deleteurl="@Url.Action("DeleteMemberStateHistory")" class="k-button" id="btnDeleteMemberStateHistory" name="btnDeleteMemberStateHistory"><span class="fa fa-remove"></span> Hapus Info DKH</button>
+                        </p>
+                        @(Html.Kendo().Grid(Model.StateHistories).Name("dkh").EnableCustomBinding(true)
+                            .Columns(column =>
+                            {
+                                column.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' name='chkDeleteMemberStateHistory' value='#=Id#' />")
+                                    .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                            column.Bound(m => m.MemberStateDescription);
+                            column.Bound(m => m.EffDate).Format("{0:dd MMMM yyyy}");
+                            column.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='javascript:;;' class='k-button k-button-icon edit-memberstatehistory'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+                            }).DataSource(ds => ds.Ajax().Read("ListMemberStateHistory", "Member", new { area = "Master", memberId = Model.Id }))
+                        )<br />
+                    </div>
+                    <div id="catatan">
+                        <br />
+                        <p>
+                            <a href="@Url.Action("CreateMemberNotes")" class="k-button k-button-icon" id="btnAddNewMemberNotes" data-createurl="@Url.Action("CreateMemberNotes")"><span class="fa fa-plus"></span> Tambah Catatan</a>
+                            <button type="submit" class="k-button" id="btnDeleteMemberNotes" name="btnDeleteMemberNotes" data-deleteurl="@Url.Action("DeleteMemberNotes")"><span class="fa fa-remove"></span> Hapus Catatan</button>
+                        </p>
+                        @(Html.Kendo().Grid(Model.Notes).Name("notes").EnableCustomBinding(true)
+                            .Columns(column =>
+                            {
+                                column.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' name='chkDeleteMemberNotes' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                            column.Bound(m => m.ChangedWhen).Format("{0:dd MMMM yyyy}").Title("Dientry Tanggal");
+                            column.Bound(m => m.ChangedBy).Title("Dientry oleh");
+                            column.Bound(m => m.Notes).Title("Catatan");
+                            column.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='javascript:;;' class='k-button k-button-icon edit-membernotes' data-editurl='" + Url.Action("EditMarriage") + "'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+                            }).DataSource(ds => ds.Ajax().Read("ListNotes", "Member", new { area = "Master", memberId = Model.Id }))
+                        )<br />
+                    </div>
+                    <div id="pelawatan">
+                        @(Html.Kendo().Grid(Model.Visits).Name("visits").EnableCustomBinding(true)
+                            .Columns(column =>
+                            {
+                                column.Bound(m => m.VisitDate).Format("{0:dd MMMM yyyy}").Title("Tanggal Lawat");
+                                column.Bound(m => m.VisitResultName).Title("Hasil Lawat");
+                                column.Bound(m => m.Notes).Title("Catatan");
+                            }).DataSource(ds => ds.Ajax().Read("ListVisits", "Member", new { area = "Master", memberId = Model.Id }))
+                            .Pageable()
+                            .Sortable()
+                            .Filterable()
+                        )<br />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <br />
+                        <button type="submit" id="btnSave" name="btnSave" class="k-button"><i class="fa fa-save"></i> Simpan</button>
+                        <a href="@Url.Action("Index")" class="k-button"><i class="fa fa-list"></i> Kembali ke Daftar Anggota</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<div id="marriageAddEditWindow"></div>
+<div id="memberStateHistAddEditWindow"></div>
+<div id="memberNotesAddEditWindow"></div>
+
+<div id="windowBrowseMember" data-browsememberurl="@Url.Action("Index", "BrowseMember", new { area = "Browse", callback = "SpouseId;SpouseNo;SpouseName" })"></div>
+
+@(FormOperationHelper.ServiceOperation(
+    Url.Action("CreateMarriage"),
+    Url.Action("EditMarriage"),
+    Url.Action("DeleteMarriage"), "marriageServiceUrl"))
+
+@(FormOperationHelper.ServiceOperation(
+    Url.Action("CreateMemberStateHistory"),
+    Url.Action("EditMemberStateHistory"),
+    Url.Action("DeleteMemberStateHistory"), "memberStateHistoryUrl"))
+
+@(FormOperationHelper.ServiceOperation(
+    Url.Action("CreateMemberNotes"),
+    Url.Action("EditMemberNotes"),
+    Url.Action("DeleteMemberNotes"), "memberNotesUrl"))
+
+@section scripts {
+    <script src="@Href("~/Scripts/modules/memberCreateEdit.js")"></script>
+}

@@ -1,0 +1,38 @@
+﻿@using Calvary.ViewModels.Browse
+
+@(Html.Kendo().Grid<BrowseShrineViewModel>().Name("grid").EnableCustomBinding(true).Columns(
+    col =>
+    {
+        col.Template(@<text></text>).ClientTemplate("<a data-return-0='#=Id#' data-return-1='#=Name#' href='javascript:;;' class='k-button k-button-icon selectRow'><i class='fa fa-edit'></i> Pilih</a>").Width(100).Title("");
+        col.Bound(m => m.Name).Title("Tempat Ibadah");
+
+    })
+    .Pageable()
+    .Filterable()
+    .DataSource(ds => ds.Ajax().Read("ListBrowseShrine", "BrowseShrine", new { area = "Browse" }))
+    .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+)
+
+
+<script>
+    var browse = (function() {
+        return {
+            onSelectRow: function(e) {
+                e.preventDefault();                
+                var that = this;
+                var callback = "@ViewBag.callback";
+                if (callback.length > 0) {
+                    var callbackArray = callback.split(";");
+                    $.each(callbackArray, function(index, el) {
+                        $("#" + el).val($(that).attr("data-return-" + index));
+                    });
+                }
+                $("#windowBrowseShrine").data("kendoWindow").close();
+            }
+        }
+    })();
+
+    $(function() {
+        $("#grid").on("click", ".selectRow", browse.onSelectRow);
+    });
+</script>

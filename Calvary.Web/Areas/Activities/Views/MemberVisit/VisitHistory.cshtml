@@ -1,0 +1,67 @@
+﻿@model Calvary.ViewModels.Activities.MemberVisit.VisitHistoryViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <h4>Pelawatan - Daftar Kunjungan</h4>
+    </div>
+</div>
+<br />
+<div class="row" id="viewModelWorkspace">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-2">@Html.LabelFor(m => m.MemberNo):</div>
+                        <div class="col-md-8">@Html.DisplayFor(m => m.MemberNo)</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">@Html.LabelFor(m => m.MemberName):</div>
+                        <div class="col-md-8">@Html.DisplayFor(m => m.MemberName)</div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">@Html.LabelFor(m => m.Address):</div>
+                        <div class="col-md-8">@Html.DisplayFor(m => m.Address)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm())
+        {
+            @Html.HiddenFor(m => m.MemberId)
+            @Html.ValidationSummary()
+            <p>
+                <a href="@Url.Action("Create")" class="k-button k-button-icon" id="btnAddNew"><span class="fa fa-plus"></span> Input</a>
+                <button type="submit" class="k-button" id="btnDelete" name="btnDelete"><span class="fa fa-remove"></span> Hapus</button>
+                &nbsp;&nbsp;&nbsp;
+                <a href="@Url.Action("Index")" class="k-button k-button-icon" id="btnBackToList"><span class="fa fa-fast-backward"></span> Kembali ke Daftar Jemaat</a>
+            </p>
+            @(Html.Kendo().Grid(Model.List).Name("grid").EnableCustomBinding(true).Columns(
+                  col =>
+                  {
+                  col.Template(@<text></text>).ClientTemplate(@"<input type='checkbox' id='chkDelete' name='chkDelete' value='#=Id#' />")
+                          .Width(30).HtmlAttributes(new { style = "text-align:center;" });
+                  col.Bound(m => m.VisitDate).Title("Tgl. Kunjungan").Format("{0:dd-MMM-yyyy}");
+                  col.Bound(m => m.VisitResultName).Title("Hasil Kunjungan");
+                  col.Template(@<text></text>).ClientTemplate("<a data-id='#=Id#' href='" + Url.Action("Edit", new { id = "#=Id#" }) + "' class='k-button k-button-icon editRow'><i class='fa fa-edit'></i></a>").Width(50).Title("");
+
+                  })
+                .Pageable()
+                .Filterable()
+                .DataSource(ds => ds.Ajax().Read("ListVisitHistory", "MemberVisit", new { area = "Activities", memberId = ViewContext.RouteData.Values["id"] }))
+                .Sortable(s => s.SortMode(GridSortMode.SingleColumn))
+)
+}
+    </div>
+
+    <div id="addEditWindow"></div>
+    @FormOperationHelper.ServiceOperation(
+        Url.Action("Create"), 
+        Url.Action("Edit"), 
+        Url.Action("Delete"))
+</div>
+
+
+@section scripts {
+    <script src="@Href("~/Scripts/modules/visitHistory.js")"></script>
+}

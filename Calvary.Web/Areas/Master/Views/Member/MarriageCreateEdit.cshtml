@@ -1,0 +1,125 @@
+﻿@model Calvary.ViewModels.Master.Member.MemberMarriageCreateEditViewModel
+
+<div style="width: 650px; padding: 10px 10px 10px 10px;">
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "frmMarriage", name = "frmMarriage" }))
+    {
+        @Html.HiddenFor(m => m.Id)
+        @Html.HiddenFor(m => m.MemberId)
+        @FormOperationHelper.RenderAuditFields(Model)
+        <div class="form-horizontal">
+            <div class="form-group">
+                <div class="col-md-7">
+                    @Html.Kendo().CheckBoxFor(model => model.MarriedToMember).Label("Menikah dengan Anggota")
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.HiddenFor(model => model.SpouseId)
+                    @Html.LabelFor(model => model.SpouseNo)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.SpouseNo)
+                    <a id="browseMember" class="k-icon k-i-search" href="#"></a>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.SpouseName)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.SpouseName).HtmlAttributes(new { style = "width: 300px;" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.MarriageDate)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().DatePickerFor(model => model.MarriageDate)
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.Priest)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.Priest).HtmlAttributes(new { style = "width:300px;" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.ShrineId)
+                </div>
+                <div class="col-md-7">
+                    @(Html.Kendo().DropDownListFor(model => model.ShrineId).DataSource(ds => ds.Read("GetShrines", "Member", new { area = "Master" })).DataTextField("Name").DataValueField("Id").OptionLabel("Pilih Gereja").HtmlAttributes(new { style = "width: 350px;" }))
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.LegalRegNo)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.LegalRegNo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.LegalDate)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().DatePickerFor(model => model.LegalDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.ChurchRegNo)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.ChurchRegNo)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3">
+                    @Html.LabelFor(model => model.City)
+                </div>
+                <div class="col-md-7">
+                    @Html.Kendo().TextBoxFor(model => model.City)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-3"></div>
+                <div class="col-md-7">
+                    <button type="submit" id="btnSaveMarriage" name="btnSave" class="k-button">Simpan</button>
+                    <button type="button" id="btnCloseMarriage" name="btnClose" class="k-button">Tutup</button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<script>
+    $(function () {
+        $("#SpouseNo").keydown(function (ev) {
+            ev.preventDefault();
+
+            return false;
+        });
+
+        $("#MarriedToMember").on("change", memberDetail.onMarriedToMemberCheckedChanged);
+        $("#btnSaveMarriage").click(memberDetail.saveMarriageInfo);
+        $("#btnCloseMarriage").click(memberDetail.closeMarriageInfo);
+        memberDetail.initializeFields();
+    });
+</script>

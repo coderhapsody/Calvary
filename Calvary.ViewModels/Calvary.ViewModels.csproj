@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{64E57613-B7D9-44C1-89BC-F0FB7549A419}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Calvary.ViewModels</RootNamespace>
+    <AssemblyName>Calvary.ViewModels</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activities\Income\CreateEditViewModel.cs" />
+    <Compile Include="Activities\Income\IndexViewModel.cs" />
+    <Compile Include="Activities\Income\ListIncomeViewModel.cs" />
+    <Compile Include="Activities\MemberVisit\CreateEditViewModel.cs" />
+    <Compile Include="Activities\MemberVisit\IndexViewModel.cs" />
+    <Compile Include="Activities\MemberVisit\ListMemberVisitViewModel.cs" />
+    <Compile Include="Activities\MemberVisit\VisitHistoryViewModel.cs" />
+    <Compile Include="Activities\Resignation\CreateEditViewModel.cs" />
+    <Compile Include="Activities\Resignation\IndexViewModel.cs" />
+    <Compile Include="Activities\Resignation\ListResignationViewModel.cs" />
+    <Compile Include="Activities\ScheduleGroup\CreateEditViewModel.cs" />
+    <Compile Include="Activities\ScheduleGroup\IndexViewModel.cs" />
+    <Compile Include="Activities\ScheduleGroup\ListScheduleGroupViewModel.cs" />
+    <Compile Include="Activities\Schedule\CreateEditViewModel.cs" />
+    <Compile Include="Activities\Schedule\IndexViewModel.cs" />
+    <Compile Include="Activities\Schedule\ListScheduleViewModel.cs" />
+    <Compile Include="Activities\Worship\CreateEditViewModel.cs" />
+    <Compile Include="Activities\Worship\IncomeCreateEditViewModel.cs" />
+    <Compile Include="Activities\Worship\IncomeIndexViewModel.cs" />
+    <Compile Include="Activities\Worship\IndexViewModel.cs" />
+    <Compile Include="Activities\Worship\ListIncomeViewModel.cs" />
+    <Compile Include="Activities\Worship\ListWorshipViewModel.cs" />
+    <Compile Include="BaseConcurrencyViewModel.cs" />
+    <Compile Include="BaseViewModel.cs" />
+    <Compile Include="Browse\BrowseMemberViewModel.cs" />
+    <Compile Include="Browse\BrowseShrineViewModel.cs" />
+    <Compile Include="AjaxViewModel.cs" />
+    <Compile Include="ChangePasswordViewModel.cs" />
+    <Compile Include="Dashboard\BirthdayViewModel.cs" />
+    <Compile Include="Dashboard\DashboardViewModel.cs" />
+    <Compile Include="Dashboard\MemberSummaryByAge.cs" />
+    <Compile Include="Dashboard\MemberSummaryByGender.cs" />
+    <Compile Include="DropDownViewModel.cs" />
+    <Compile Include="Master\EducationGrade\CreateEditViewModel.cs" />
+    <Compile Include="Master\EducationGrade\IndexViewModel.cs" />
+    <Compile Include="Master\EducationGrade\ListEducationMajorViewModel.cs" />
+    <Compile Include="Master\EducationMajor\CreateEditViewModel.cs" />
+    <Compile Include="Master\EducationMajor\IndexViewModel.cs" />
+    <Compile Include="Master\EducationMajor\ListEducationMajorViewModel.cs" />
+    <Compile Include="Master\IncomeType\CreateEditViewModel.cs" />
+    <Compile Include="Master\IncomeType\IndexViewModel.cs" />
+    <Compile Include="Master\IncomeType\ListIncomeTypeViewModel.cs" />
+    <Compile Include="Master\MeetingType\CreateEditViewModel.cs" />
+    <Compile Include="Master\MeetingType\IndexViewModel.cs" />
+    <Compile Include="Master\MeetingType\ListMeetingTypeViewModel.cs" />
+    <Compile Include="Master\MemberState\CreateEditViewModel.cs" />
+    <Compile Include="Master\MemberState\IndexViewModel.cs" />
+    <Compile Include="Master\MemberState\ListMemberStateViewModel.cs" />
+    <Compile Include="Master\Member\CreateEditViewModel.cs" />
+    <Compile Include="Master\Member\ListMemberStateHistoryViewModel.cs" />
+    <Compile Include="Master\Member\IndexViewModel.cs" />
+    <Compile Include="Master\Member\ListMemberViewModel.cs" />
+    <Compile Include="Master\Member\MemberMarriageCreateEditViewModel.cs" />
+    <Compile Include="Master\Member\MemberMarriageViewModel.cs" />
+    <Compile Include="Master\Member\MemberNoteViewModel.cs" />
+    <Compile Include="Master\Member\MemberStateHistoryCreateEditViewModel.cs" />
+    <Compile Include="Master\Skill\CreateEditViewModel.cs" />
+    <Compile Include="Master\Skill\IndexViewModel.cs" />
+    <Compile Include="Master\Skill\ListHobbyViewModel.cs" />
+    <Compile Include="Master\Hobby\CreateEditViewModel.cs" />
+    <Compile Include="Master\Hobby\IndexViewModel.cs" />
+    <Compile Include="Master\Hobby\ListHobbyViewModel.cs" />
+    <Compile Include="Master\Shrine\CreateEditViewModel.cs" />
+    <Compile Include="Master\Shrine\IndexViewModel.cs" />
+    <Compile Include="Master\Shrine\ListShrineViewModel.cs" />
+    <Compile Include="Master\Ethnic\CreateEditViewModel.cs" />
+    <Compile Include="Master\Ethnic\IndexViewModel.cs" />
+    <Compile Include="Master\Ethnic\ListEthnicViewModel.cs" />
+    <Compile Include="Master\JobGroup\CreateEditViewModel.cs" />
+    <Compile Include="Master\JobGroup\IndexViewModel.cs" />
+    <Compile Include="Master\JobGroup\ListJobGroupViewModel.cs" />
+    <Compile Include="Master\Job\CreateEditViewModel.cs" />
+    <Compile Include="Master\Job\IndexViewModel.cs" />
+    <Compile Include="Master\Job\ListJobViewModel.cs" />
+    <Compile Include="Master\Region\CreateEditViewModel.cs" />
+    <Compile Include="Master\Region\IndexViewModel.cs" />
+    <Compile Include="Master\Region\ListRegionViewModel.cs" />
+    <Compile Include="Master\WorshipType\CreateEditViewModel.cs" />
+    <Compile Include="Master\WorshipType\IndexViewModel.cs" />
+    <Compile Include="Master\WorshipType\ListWorshipTypeViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Security\Configuration\EditViewModel.cs" />
+    <Compile Include="Security\MenuAccess\ListMenuViewModel.cs" />
+    <Compile Include="Security\MenuAccess\RoleAccessViewModel.cs" />
+    <Compile Include="Security\Role\CreateEditViewModel.cs" />
+    <Compile Include="Security\Role\IndexViewModel.cs" />
+    <Compile Include="Security\Role\ListRoleViewModel.cs" />
+    <Compile Include="Security\User\CreateEditViewModel.cs" />
+    <Compile Include="Security\User\IndexViewModel.cs" />
+    <Compile Include="Security\User\UserLoginViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Calvary.Data\Calvary.Data.csproj">
+      <Project>{ecb1e0e1-21db-4360-8db6-31db94b64330}</Project>
+      <Name>Calvary.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
